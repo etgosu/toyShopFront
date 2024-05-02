@@ -1,16 +1,25 @@
 <template>
-  <div>
-    <h1>{{ title }}</h1>
-    <a href="http://localhost:3000">로그인</a>
-    <v-btn @click="test">테스트</v-btn>
-  </div> 
+  <v-app>
+    <v-main>
+      <Header />
+      <MainInfo/>
+    <!-- Other content goes here -->
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+import Header from '@/components/Header'
+import MainInfo from '@/components/MainInfo' 
 import axios from 'axios';
 
-export default {
 
+export default {
+  components: {
+    Header,
+    MainInfo
+   // UserInfo
+  },
   data: () => ({
     //
     title : "안녕하세요"
