@@ -7,7 +7,7 @@
         <v-row>
           <v-col
             v-for="product in products"
-            :key="product.id"
+            :key="product._id"
             cols="4"
           >
             <v-card>
@@ -16,27 +16,25 @@
                 :alt="product.name"
                 height="200"
               ></v-img>
-              <v-card-title>{{ product.name }}</v-card-title>
+              <v-card-title>{{ product.prodNm}}</v-card-title>
               <v-card-text>{{ product.price }}원</v-card-text>
-<v-card-actions class="justify-content-end">
-  <v-btn
-    color="primary"
-    icon
-    class="mr-2"
-  >
-    <v-icon>mdi-cart-plus</v-icon>
-    장바구니 담기
-  </v-btn>
-  <v-btn
-    color="primary"
-    icon
-  >
-    <v-icon>mdi-cart-plus</v-icon>
-    바로구매 하기
-  </v-btn>
-</v-card-actions>
-
- 
+              <v-card-actions class="justify-content-end">
+                <v-btn
+                  color="primary"
+                  icon
+                  class="mr-2"
+                >
+                  <v-icon>mdi-cart-plus</v-icon>
+                  장바구니 담기
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  icon
+                >
+                  <v-icon>mdi-cart-plus</v-icon>
+                  바로구매 하기
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -75,26 +73,32 @@
 }
 </style>
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      products: [
-        { id: 1, name: '쿼케클라', price: 10000, image: 'images/product1.png' },
-        { id: 2, name: '졔만과자', price: 15000, image: 'images/product2.png' },
-        { id: 3, name: '셔어깡', price: 20000, image: 'images/product3.png' },
-        { id: 4, name: '거라밥', price: 10000, image: 'images/product4.png' },
-        { id: 5, name: '사또밥', price: 15000, image: 'images/product5.png' },
-        { id: 6, name: '샤스크림', price: 20000, image: 'images/product6.png' },
-        { id: 7, name: '삥뚜어', price: 10000, image: 'images/product7.png' },
-        { id: 8, name: '뜰레팝', price: 15000, image: 'images/product8.png' },
-        { id: 9, name: '아메리카노', price: 20000, image: 'images/product9.png' },
-        // 나머지 상품 정보 추가
-      ],
+      products: [],
       user: {
         name: '홍길동',
         email: 'hong@example.com',
         point: 5000
       }
+    }
+  },
+  mounted() {
+    this.fetchProducts();
+  },
+  methods: {
+    fetchProducts() {
+      axios.get('http://localhost:3000/products/list')
+      .then(response => {
+        console.log(response);
+        this.products = response.data.prodList; 
+      })
+      .catch(error => {
+        console.error('Error !!!', error);
+      });
     }
   }
 }
