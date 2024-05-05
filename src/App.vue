@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <Header />
-      <MainInfo/>
+      <router-view/>
     <!-- Other content goes here -->
     </v-main>
   </v-app>
@@ -10,15 +10,11 @@
 
 <script>
 import Header from '@/components/Header'
-import MainInfo from '@/components/MainInfo' 
 import axios from 'axios';
-
 
 export default {
   components: {
-    Header,
-    MainInfo
-   // UserInfo
+    Header
   },
   data: () => ({
   }),
