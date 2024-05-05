@@ -15,6 +15,7 @@
     </v-btn>
   </v-app-bar>
 </template>
+
 <style scoped>
  .v-btn:before {
   display: none;

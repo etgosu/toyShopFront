@@ -65,6 +65,7 @@
     </v-row>
   </v-container>
 </template>
+
 <style scoped>
   .custom-card-actions {
   display: inline-block;
@@ -72,6 +73,7 @@
   padding: 16px;
 }
 </style>
+
 <script>
 import axios from 'axios';
 
