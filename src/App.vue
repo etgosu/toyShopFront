@@ -21,8 +21,6 @@ export default {
    // UserInfo
   },
   data: () => ({
-    //
-    title : "안녕하세요"
   }),
   methods: {
     test() {

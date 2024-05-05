@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app>
     <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none"></v-app-bar-nav-icon>
-    <v-toolbar-title>리!마트-잡화점</v-toolbar-title>
+    <v-toolbar-title>짱!마트-잡화점</v-toolbar-title>
     <v-spacer></v-spacer>
     <category-menu></category-menu>
     <v-spacer></v-spacer>
