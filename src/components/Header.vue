@@ -15,7 +15,7 @@
     <v-btn left :to="{ name: 'mypage' }" elevation="0">
       <v-icon>mdi-account</v-icon>마이페이지
     </v-btn>
-    <v-btn left :to="{ name: '' }" elevation="0">
+    <v-btn left :to="{ name: 'shopBasket' }" elevation="0">
       <v-icon>mdi-cart</v-icon>장바구니
     </v-btn>
   </v-app-bar>
