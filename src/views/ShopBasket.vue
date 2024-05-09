@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <v-data-table :headers="headers" :items="numberedItems" item-key="_id">
+    <v-data-table
+      :headers="headers"
+      :items="numberedItems"
+      item-key="_id"
+      show-select
+    >
       <template v-slot:[`item.prodInfo.prodNm`]="{ item }">
         <router-link :to="`/product/${item._id}`">{{
           item.prodInfo.prodNm
