@@ -16,10 +16,11 @@
       </template>
       <template v-slot:[`item.주문관리`]="{ item }">
         <v-btn @click="purchase(item)">주문하기</v-btn>
-        <v-btn @click="cancel(item)">취소</v-btn>
+        <v-btn @click="cancel(item)"><v-icon>mdi-delete</v-icon></v-btn>
       </template>
     </v-data-table>
-    <div class="mt-4 text-right">총 {{ totalPriceAmt }}원</div>
+    <div class="mt-4 text-right">총 구매금액 : {{ totalPriceAmt }}원</div>
+    <v-btn @click="purchaseSelAll()">주문하기</v-btn>
   </v-container>
 </template>
 
@@ -30,11 +31,11 @@ export default {
   data() {
     return {
       headers: [
-        { text: "번호", value: "no" },
         { text: "상품명", value: "prodInfo.prodNm" },
         { text: "상품가격", value: "prodInfo.price" },
         { text: "수량", value: "qty" },
-        { text: "주문관리", value: "주문관리" },
+        { text: "구매금액", value: "priceSumAmt" },
+        { text: "", value: "주문관리" },
       ],
       baskets: [],
       totalPriceAmt: 0,
@@ -48,8 +49,8 @@ export default {
       return this.baskets.map((item, index) => {
         return {
           ...item,
-          no: index + 1,
           selected: false, // 초기 선택 상태 설정
+          priceSumAmt: item.prodInfo.price * item.qty,
         };
       });
     },
@@ -76,22 +77,25 @@ export default {
       this.totalPrice();
     },
     totalPrice() {
-      // 장바구니에서 선택한 상품들의 총 구매금액 계 
+      // 장바구니에서 선택한 상품들의 총 구매금액 계산
       this.totalPriceAmt = this.numberedItems.reduce((total, item) => {
         return item.selected ? total + item.prodInfo.price * item.qty : total;
       }, 0);
     },
     purchase(item) {
-      // 구매 동작
+      // 개별상품 구매하기
     },
     cancel(item) {
-      // 취소 동작
+      // 개별상품 장바구니에서 삭제하기
+    },
+    purchaseSelAll() {
+      // 선택된 모든 상품 구매하기
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 /* headers 가운데 정렬 */
 .v-data-table-header .v-data-table-header-wrapper {
   justify-content: center;
