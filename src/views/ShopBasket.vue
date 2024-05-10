@@ -1,10 +1,13 @@
 <template>
   <v-container>
+    <h2 class="mb-4">장바구니</h2>
+    <h4 class="mb-4">장바구니에 담긴 상품은 30일 뒤 초기화 됩니다.</h4>
     <v-data-table
       :headers="headers"
       :items="numberedItems"
       item-key="_id"
       show-select
+      @input="updateSelected"
     >
       <template v-slot:[`item.prodInfo.prodNm`]="{ item }">
         <router-link :to="`/product/${item._id}`">{{
@@ -16,26 +19,9 @@
         <v-btn @click="cancel(item)">취소</v-btn>
       </template>
     </v-data-table>
+    <div class="mt-4 text-right">총 {{ totalPriceAmt }}원</div>
   </v-container>
 </template>
-
-<style>
-/* headers 가운데 정렬 */
-/* 헤더 가운데 정렬 */
-.v-data-table-header .v-data-table-header-wrapper {
-  justify-content: center;
-}
-
-/* v-btn 간격 조정 */
-.v-btn {
-  margin: 0 5px; /* 좌우 간격 조정 */
-}
-
-/* v-header에 음영 추가 */
-.v-data-table-header {
-  background-color: #f2f2f2; /* 배경색 지정 */
-}
-</style>
 
 <script>
 import axios from "axios";
@@ -51,6 +37,7 @@ export default {
         { text: "주문관리", value: "주문관리" },
       ],
       baskets: [],
+      totalPriceAmt: 0,
     };
   },
   mounted() {
@@ -62,6 +49,7 @@ export default {
         return {
           ...item,
           no: index + 1,
+          selected: false, // 초기 선택 상태 설정
         };
       });
     },
@@ -71,12 +59,26 @@ export default {
       axios
         .get("http://localhost:3000/basket/list?userNm=김영남")
         .then((response) => {
-          console.log(response);
           this.baskets = response.data.basketList;
         })
         .catch((error) => {
           console.error("Error !!!", error);
         });
+    },
+    updateSelected(selectedItems) {
+      this.numberedItems.forEach((item) => {
+        item.selected = selectedItems.some(
+          (selected) => selected._id === item._id
+        );
+      });
+
+      this.totalPrice();
+    },
+    totalPrice() {
+      // selectedItems를 기반으로 totalPrice 계산
+      this.totalPriceAmt = this.numberedItems.reduce((total, item) => {
+        return item.selected ? total + item.prodInfo.price * item.qty : total;
+      }, 0);
     },
     purchase(item) {
       // 구매 동작
@@ -87,3 +89,20 @@ export default {
   },
 };
 </script>
+
+<style>
+/* headers 가운데 정렬 */
+.v-data-table-header .v-data-table-header-wrapper {
+  justify-content: center;
+}
+
+/* v-btn 간격 조정 */
+.v-btn {
+  margin: 0 5px; /* 좌우 간격 조정 */
+}
+
+/* v-header에 음영 추가 */
+.v-data-table-header {
+  background-color: #f2f2f2; /* 배경색 지정 */
+}
+</style>
