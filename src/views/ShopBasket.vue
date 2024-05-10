@@ -66,6 +66,7 @@ export default {
         });
     },
     updateSelected(selectedItems) {
+      // 장바구니 상품 선택 동작
       this.numberedItems.forEach((item) => {
         item.selected = selectedItems.some(
           (selected) => selected._id === item._id
@@ -75,7 +76,7 @@ export default {
       this.totalPrice();
     },
     totalPrice() {
-      // selectedItems를 기반으로 totalPrice 계산
+      // 장바구니에서 선택한 상품들의 총 구매금액 계 
       this.totalPriceAmt = this.numberedItems.reduce((total, item) => {
         return item.selected ? total + item.prodInfo.price * item.qty : total;
       }, 0);
