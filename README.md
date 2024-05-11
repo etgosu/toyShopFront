@@ -1,6 +1,8 @@
 # toy-shop-project
 Vue.js 와 Vuetify를 활용한 쇼핑몰 프론트엔드 프로젝트
 
+# test 
+ test
 ## Project setup
 ```
 npm install
