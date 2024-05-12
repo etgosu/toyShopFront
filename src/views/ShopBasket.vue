@@ -16,7 +16,9 @@
       </template>
       <template v-slot:[`item.주문관리`]="{ item }">
         <v-btn @click="purchase(item)">주문하기</v-btn>
-        <v-btn @click="cancel(item)"><v-icon>mdi-delete</v-icon></v-btn>
+        <v-btn @click="deleteBasketItem(item)"
+          ><v-icon>mdi-delete</v-icon></v-btn
+        >
       </template>
     </v-data-table>
     <div class="mt-4 text-right">총 구매금액 : {{ totalPriceAmt }}원</div>
@@ -85,8 +87,26 @@ export default {
     purchase(item) {
       // 개별상품 구매하기
     },
-    cancel(item) {
+    deleteBasketItem(item) {
       // 개별상품 장바구니에서 삭제하기
+      const data = {
+        // 삭제 요청에 포함할 추가 데이터
+        userNm: "김영남",
+      };
+
+      axios
+        .delete(`http://localhost:3000/basket/delete/${item._id}`, {
+          data: data,
+        })
+        .then((response) => {
+          // 삭제 성공 시 처리 로직
+          console.log("Basket item deleted:", response.data);
+          this.fetchBaskets();
+        })
+        .catch((error) => {
+          // 삭제 실패 시 처리 로직
+          console.error("Error deleting basket item:", error);
+        });
     },
     purchaseSelAll() {
       // 선택된 모든 상품 구매하기
